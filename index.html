@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head> <link rel="stylesheet" href="Skrinshot 2026-01-01 112515.png"></head>
+<meta charset="UTF-8">
+<title>ABROR_OKENUZ SHOP</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#000000; /* To'liq qora fon */
+  color:#fff;
+  min-height:100vh;
+}
+
+/* HEADER */
+.header{
+  background:#000;
+  border-bottom:2px solid #ffb300;
+  position:relative;
+}
+.top-bar{
+  max-width:1400px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 15px;
+  position:relative;
+}
+.logo{
+  font-size:36px;
+  font-weight:bold;
+  color:#fff; /* Oq rang */
+  z-index:10;
+  text-shadow: 0 0 10px rgba(255,179,0,0.5);
+}
+.logo span{
+  color:#ffb300;
+}
+
+/* Menyu o'rtada */
+.nav{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:40px;
+}
+.nav a{
+  text-decoration:none;
+  color:#fff;
+  font-size:22px;
+  font-weight:bold;
+  position:relative;
+  padding:10px 0;
+  transition:.3s;
+}
+.nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:0;
+  height:4px;
+  background:#ffb300;
+  transition:.4s;
+  border-radius:2px;
+}
+.nav a:hover{
+  color:#ffb300;
+}
+.nav a:hover::after{
+  width:100%;
+}
+
+/* Savatcha ikonkasi */
+.cart-icon{
+  font-size:32px;
+  cursor:pointer;
+  position:relative;
+  z-index:10;
+  color:#fff;
+}
+.cart-count{
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  background:#ff0000;
+  color:#fff;
+  font-size:14px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.hamburger{
+  display:none;
+  font-size:30px;
+  cursor:pointer;
+  color:#fff;
+  z-index:10;
+}
+
+/* BANNER */
+.banner{
+  background:#000;
+  padding:80px 20px;
+  color:#fff;
+  text-align:center;
+}
+.banner h1{
+  font-size:48px;
+  color:#ffb300;
+}
+.banner p{
+  margin-top:15px;
+  font-size:20px;
+}
+
+/* BO'LIMLAR */
+.almaz-section, .account-section{
+  max-width:1200px;
+  margin:60px auto;
+  padding:0 15px;
+}
+.almaz-section h2{
+  margin-bottom:40px;
+  font-size:32px;
+  text-align:center;
+  color:#ffb300;
+}
+.account-section h2{
+  margin-bottom:40px;
+  font-size:36px;
+  text-align:center;
+  color:#ffb300;
+}
+
+/* KARTALAR */
+.almaz-grid, .account-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+.almaz-card, .account-card{
+  background:#111111; /* Quyq qora */
+  color:#fff;
+  border-radius:20px;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 0 20px rgba(255,179,0,0.3);
+  transition:.4s;
+}
+.almaz-card:hover, .account-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 40px rgba(255,179,0,0.6);
+}
+.almaz-card h3, .account-card h3{
+  font-size:24px;
+  margin-bottom:15px;
+  color:#ffb300;
+}
+.almaz-card span, .account-card span{
+  display:block;
+  font-size:20px;
+  color:#ffb300;
+  margin:20px 0;
+}
+
+/* Sotib olish tugmasi */
+.almaz-card button, .account-card button{
+  width:100%;
+  padding:16px;
+  background:#000;
+  color:#fff;
+  border:2px solid #fff;
+  border-radius:50px;
+  font-weight:bold;
+  font-size:18px;
+  cursor:pointer;
+  transition:.3s;
+}
+.almaz-card button:hover, .account-card button:hover{
+  background:#ffb300;
+  color:#000;
+  border-color:#ffb300;
+  transform:scale(1.05);
+}
+
+.account-card img{
+  width:100%;
+  height:auto; /* Rasm o'z balandligida */
+  max-height:600px; /* Juda katta bo'lmasligi uchun */
+  object-fit:contain; /* To'liq ko'rinishi, kesilmasdan */
+  background:#000; /* Fon qora */
+  border-radius:12px;
+  margin-bottom:15px;
+  display:block;
+}
+.account-card .description{
+  font-size:15px;
+  line-height:1.6;
+  margin-bottom:15px;
+  text-align:left;
+  white-space:pre-line;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.9);
+}
+.modal-content {
+  background-color: #111111;
+  color:#fff;
+  margin: 8% auto;
+  padding: 35px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 700px;
+  box-shadow: 0 0 40px rgba(255,179,0,0.7);
+  border:1px solid #333;
+}
+.modal-content h2 {
+  color:#ffb300;
+  margin-bottom: 30px;
+  font-size: 32px;
+  text-align:center;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 36px;
+  font-weight:bold;
+  cursor: pointer;
+}
+.close:hover {
+  color: #ffb300;
+}
+
+/* SAVATCHA */
+#cartItems{
+  list-style:none;
+  max-height:400px;
+  overflow-y:auto;
+  margin-bottom:20px;
+}
+#cartItems li{
+  background:#222;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:18px;
+}
+.remove-item{
+  background:#d00;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:5px;
+  cursor:pointer;
+  font-weight:bold;
+}
+#totalPrice{
+  font-size:24px;
+  font-weight:bold;
+  color:#ffb300;
+  text-align:right;
+  margin:20px 0;
+}
+.cart-buttons{
+  display:flex;
+  gap:15px;
+}
+.cart-buttons button{
+  flex:1;
+  padding:16px;
+  font-size:18px;
+  font-weight:bold;
+  border:2px solid #fff;
+  border-radius:10px;
+  cursor:pointer;
+}
+#adminContactBtn{
+  background:#0a3cff;
+  color:#fff;
+}
+#adminContactBtn:hover{
+  background:#0834cc;
+}
+#paymentBtn{
+  background:#000;
+  color:#fff;
+}
+#paymentBtn:hover{
+  background:#ffb300;
+  color:#000;
+}
+
+/* MOBIL */
+@media(max-width:768px){
+  .hamburger{display:block;}
+  .nav{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100vh;
+    background:#000;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:50px;
+    transform:translateY(-100%);
+    transition:.5s;
+    z-index:9;
+  }
+  .nav.active{transform:translateY(0);}
+  .nav a{font-size:28px;color:#fff;}
+  .nav a:hover{color:#ffb300;}
+  .cart-buttons{flex-direction:column;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="top-bar">
+    <div class="logo">ABROR_OKENUZ</div>
+    
+    <nav class="nav" id="navMenu">
+      <a href="#almaz-section">Almazlar</a>
+      <a href="#account-section">Accountlar</a>
+      <a href="javascript:void(0);" onclick="openModal('tolov')">To‘lov</a>
+      <a href="javascript:void(0);" onclick="openModal('boglanish')">Bog‘lanish</a>
+    </nav>
+    
+    <div class="cart-icon" onclick="openCart()">
+      🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </div>
+    
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+  </div>
+</header>
+
+<!-- BANNER -->
+<section class="banner">
+  <div class="banner-content">
+    <h1>FREE FIRE SHOP</h1>
+    <p>ABROR_OKENUZ — ISHONCHLI TEZKOR ARZON</p>
+  </div>
+</section>
+
+<!-- ALMAZLAR -->
+<section id="almaz-section" class="almaz-section">
+  <h2>💎 Almazlar</h2>
+  <div class="almaz-grid">
+    <div class="almaz-card" data-name="105 Almaz" data-price="15000">
+      <h3>💎105 Almaz</h3><span>15 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="210 Almaz" data-price="25000">
+      <h3>💎210 Almaz</h3><span>25 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="326 Almaz" data-price="37000">
+      <h3>💎326 Almaz</h3><span>37 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="430 Almaz" data-price="51000">
+      <h3>💎430 Almaz</h3><span>51 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="546 Almaz" data-price="64000">
+      <h3>💎546 Almaz</h3><span>64 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="651 Almaz" data-price="74000">
+      <h3>💎651 Almaz</h3><span>74 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="872 Almaz" data-price="98000">
+      <h3>💎872 Almaz</h3><span>98 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="1113 Almaz" data-price="130000">
+      <h3>💎1113 Almaz</h3><span>130 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="1439 Almaz" data-price="150000">
+      <h3>💎1439 Almaz</h3><span>150 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="1659 Almaz" data-price="170000">
+      <h3>💎1659 Almaz</h3><span>170 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="2398 Almaz" data-price="250000">
+      <h3>💎2398 Almaz</h3><span>250 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="2944 Almaz" data-price="285000">
+      <h3>💎2944 Almaz</h3><span>285 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="3511 Almaz" data-price="370000">
+      <h3>💎3511 Almaz</h3><span>370 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="4796 Almaz" data-price="520000">
+      <h3>💎4796 Almaz</h3><span>520 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="Haftalik lite" data-price="11500">
+        <h3>💎90 almaz Haftalik lite </h3><span>11 500 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="Haftalik vaucher" data-price="275000">
+      <h3>💎450 almaz Haftalik vaucher </h3><span>275 000 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+    <div class="almaz-card" data-name="oylik vaucher" data-price="135500">
+      <h3>💎 2600 almaz oylik vaucher</h3><span>135 500 so‘m</span><button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+  </div>
+</section>
+
+<!-- ACCOUNTLAR -->
+<section id="account-section" class="account-section">
+  <h2>🔥 Accountlar</h2>
+  <div class="account-grid">
+    <div class="account-card" data-name="Level 60 Danaterski Account" data-price="200000">
+      <img src="Skrinshot 2026-01-01 112515.png" alt="Level 60 Danaterski Account">
+      <h3>Level 60 | Danaterski Account</h3>
+      <span>200 000 so‘m</span>
+      <div class="description">#продаётся | #сотилади
+🔥 Level 60 Danaterski Account sotiladi!
+
+📌priv 1/1 toza google
+
+💎 Ko'p almaz va rare skinlar
+🎒 To'liq Danaterski set
+⚡ High rank, ko'p killlar
+📌 Email/phone o'zgartirish mumkin
+📌 Ban yo'q, 100% toza!
+
+💳 Narx: 200 000 so‘m
+
+Tezkor sotib oling — cheklangan taklif!
+Admin: @ABROR_OKENUZ</div>
+      <button onclick="addToCart(this)">Sotib olish</button>
+    </div>
+
+    <!-- Qo'shimcha accountlar qo'shishingiz mumkin -->
+
+  </div>
+</section>
+
+<!-- SAVATCHA MODAL -->
+<div id="cartModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('cart')">&times;</span>
+    <h2>🛒 Savatcha</h2>
+    <ul id="cartItems"></ul>
+    <div id="totalPrice">Umumiy: 0 so‘m</div>
+    <div class="cart-buttons">
+      <button id="adminContactBtn">Admin ga murojaat</button>
+      <button id="paymentBtn">To‘lov</button>
+    </div>
+  </div>
+</div>
+
+<!-- TO‘LOV MODAL -->
+<div id="tolovModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('tolov')">&times;</span>
+    
+    <h2 style="font-size:32px; color:#ffb300; margin-bottom:30px;">ASSALOMU ALAYKUM </h2>
+    
+    <h3 style="font-size:24px; color:#0a3cff; margin:25px 0 15px;">To’lov qilishingiz uchun kartalar ✅</h3>
+    
+    <div style="background:#222; padding:20px; border-radius:15px; margin:15px 0;">
+      <p style="font-size:22px; margin:10px 0;"><strong>😎 Uzcard:</strong></p>
+      <p style="font-size:24px; font-weight:bold; word-break:break-all;">5614 6812 1719 1042</p>
+      <p style="font-size:18px; color:#aaa;">X.X ✅</p>
+    </div>
+    
+    <div style="background:#222; padding:20px; border-radius:15px; margin:15px 0;">
+      <p style="font-size:22px; margin:10px 0;"><strong>💳 Humo:</strong></p>
+      <p style="font-size:24px; font-weight:bold; word-break:break-all;">9860 2466 0250 0547</p>
+      <p style="font-size:18px; color:#aaa;">KH.KH ✅</p>
+    </div>
+    
+    <div style="background:#222; padding:20px; border-radius:15px; margin:15px 0;">
+      <p style="font-size:22px; margin:10px 0;"><strong>💳 Visa:</strong></p>
+      <p style="font-size:24px; font-weight:bold; word-break:break-all;">4046 3200 0822 9676</p>
+      <p style="font-size:18px; color:#aaa;">KH.KH ✅</p>
+    </div>
+    
+    <div style="background:#222; padding:20px; border-radius:15px; margin:15px 0;">
+      <p style="font-size:22px; margin:10px 0;"><strong>💳 Uzum Bank:</strong></p>
+      <p style="font-size:24px; font-weight:bold; word-break:break-all;">4916 9903 1154 8686</p>
+      <p style="font-size:18px; color:#aaa;">KH.KH ✅</p>
+    </div>
+    
+    <p style="font-size:20px; color:#ff4444; margin:30px 0 20px; font-weight:bold;">
+      📌 To’lov chek siz qabul qilinmaydi
+    </p>
+    
+    <p style="font-size:20px; margin:20px 0;">
+      <strong>Telefon raqam:</strong> 
+      <a href="tel:+998942371056" style="color:#0a3cff; font-size:22px;">+998 94 237 10 56</a>
+    </p>
+    
+    <p style="font-size:19px; color:#aaa; margin-top:25px;">
+    <br>
+      To‘lovdan keyin skrinshotni yuboring: <a href="https://t.me/ABROR_OKENUZ" style="color:#0a3cff;">@ABROR_OKENUZ</a>
+    </p>
+  </div>
+</div>
+
+<!-- BOG‘LANISH MODAL -->
+<div id="boglanishModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('boglanish')">&times;</span>
+    <h2>📞 Bog‘lanish</h2>
+    
+    <p style="font-size:20px; margin:20px 0;"><strong>Telegram:</strong> <a href="https://t.me/ABROR_OKENUZ">Telegram uchun</a></p>
+    <p style="font-size:20px; margin:20px 0;"><strong>WhatsApp:</strong> <a href="https://wa.me/+998942371056">Whatsapp uuchun</a></p>
+    <p style="font-size:20px; margin:20px 0;"><strong>Telefon:</strong> <a href="tel:+998942371056">telefon raqam</a></p>
+    <p style="font-size:20px; margin:20px 0;"><strong>Email:</strong> <a href="mailto:tufliyevabror@gmail.com">Email pochta</a></p>
+    
+    <p style="margin-top:40px; font-size:18px; color:#aaa;">
+      Savollaringiz bo‘lsa, istalgan usul orqali yozing — tezkor javob beraman! 🚀
+    </p>
+  </div>
+</div>
+
+<script>
+// Savatcha
+let cart = [];
+
+function addToCart(button) {
+  const card = button.parentElement;
+  const name = card.getAttribute('data-name');
+  const price = parseInt(card.getAttribute('data-price'));
+  
+  cart.push({name, price});
+  updateCart();
+  openCart();
+}
+
+function updateCart() {
+  const cartItems = document.getElementById('cartItems');
+  const cartCount = document.getElementById('cartCount');
+  const totalPrice = document.getElementById('totalPrice');
+  
+  cartItems.innerHTML = '';
+  let total = 0;
+  
+  cart.forEach((item, index) => {
+    total += item.price;
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <span>${item.name} — ${item.price.toLocaleString()} so‘m</span>
+      <button class="remove-item" onclick="removeFromCart(${index})">×</button>
+    `;
+    cartItems.appendChild(li);
+  });
+  
+  cartCount.textContent = cart.length;
+  totalPrice.textContent = `Umumiy: ${total.toLocaleString()} so‘m`;
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+
+function openCart() {
+  updateCart();
+  document.getElementById('cartModal').style.display = 'block';
+}
+
+// Tugmalar
+document.getElementById('adminContactBtn').onclick = function() {
+  closeModal('cart');
+  openModal('boglanish');
+};
+
+document.getElementById('paymentBtn').onclick = function() {
+  closeModal('cart');
+  openModal('tolov');
+};
+
+// Qolgan funksiyalar
+function toggleMenu() {
+  document.getElementById('navMenu').classList.toggle('active');
+}
+
+function openModal(type) {
+  document.getElementById(type + 'Modal').style.display = 'block';
+}
+
+function closeModal(type) {
+  document.getElementById(type + 'Modal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+  if (event.target.classList.contains('modal')) {
+    event.target.style.display = 'none';
+  }
+  if (!event.target.closest('.top-bar')) {
+    document.getElementById('navMenu').classList.remove('active');
+  }
+}
+</script>
+
+</body>
+</html>
